@@ -15,4 +15,4 @@ WORKDIR /app
 RUN pip3 install --upgrade pip
 RUN pip3 install -U -r requirements.txt
 
-CMD python3 -m bot
+CMD python3 bot.py
