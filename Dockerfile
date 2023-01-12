@@ -1,22 +1,18 @@
-# Python Based Docker
-FROM python:latest
+FROM python:3.9
 
-# Installing Packages
 RUN apt update && apt upgrade -y
-RUN apt install git curl python3-pip ffmpeg -y
+RUN apt install python3-pip -y
+RUN apt install ffmpeg -y
 
-# Updating Pip Packages
-RUN pip3 install -U pip
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
+RUN apt-get install -y nodejs
+RUN npm i -g npm
 
-# Copying Requirements
-COPY requirements.txt /requirements.txt
+RUN mkdir /app/
+COPY . /app
+WORKDIR /app
 
-# Installing Requirements
-RUN cd /
+RUN pip3 install --upgrade pip
 RUN pip3 install -U -r requirements.txt
-RUN mkdir /MyTelegramOrgRoBot
-WORKDIR /MyTelegramOrgRoBot
-COPY start.sh /start.sh
 
-# Running MessageSearchBot
-CMD ["/bin/bash", "/start.sh"]
+CMD python3 -m bot
